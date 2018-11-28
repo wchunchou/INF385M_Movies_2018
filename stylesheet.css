@@ -1,0 +1,16 @@
+.movielist {
+    margin-top: 30px;
+}
+
+.card {
+    margin-bottom: 20px;
+}
+
+.home-tag {
+    display: flex;
+    list-style: none;
+}
+
+.home-tag li {
+    padding-right: 5px;
+}
