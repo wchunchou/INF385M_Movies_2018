@@ -1,10 +1,9 @@
 <?php
     include_once("header.html");
     include("db_connection.php");
-    $sql="SELECT * FROM Movie ORDER BY Movie.year_released DESC";
+    $sql="SELECT * FROM Movie JOIN Genre ON Movie.genre_id = Genre.genre_id ORDER BY Movie.year_released DESC LIMIT 10";
     $result = mysqli_query($link, $sql);
-    $row = mysqli_fetch_assoc($result);
-    //print_r($row);
+    $img_path = "images/";
    
  ?>
 
@@ -19,16 +18,17 @@
         JOIN MovieTags ON MovieTags.tag_id = MovieTagJunction.tag_id WHERE Movie.movie_id='".$row["movie_id"]."'";
 
         $result_tags = mysqli_query($link, $sql_tag);
+        $posterimg = $img_path.$row["image"];
 ?>
             <div class="card">
                 <div class="row no-gutters">
                     <div class="col-auto">
-                        <a href="#"><img src="//placehold.it/200x300" class="img-fluid" alt=""></a>
+                        <a href="#"><img src=" <?php print $img_path.$row["image"]; ?>" class="img-fluid" alt="" width="200px"></a>
                     </div>
                     <div class="col">
                         <div class="card-block p-2">
                             <h4 class="card-title"><a href="#"><?php print $row["movie_name"];?></a></h4>
-                            <p class="card-text"><?php print $row["year_released"]." | ".$row["run_time"]." mins | ".$row["genre_id"];?></p>
+                            <p class="card-text"><?php print $row["year_released"]." | ".$row["run_time"]." mins | ".$row["genre"];?></p>
                             <p class="card-text"><?php print $row["story_line"];?></p>
                             
                         </div>
@@ -55,7 +55,13 @@
     print "0 results";
 }
 // pull all the tags from database
-$sql_all_tags = "SELECT * FROM MovieTags";
+$sql_all_tags = "SELECT MovieTags.tag_name, MovieTags.tag_id ,COUNT(MovieTags.tag_id) AS MOST_FREQUENT FROM MovieTagJunction 
+JOIN Movie ON Movie.movie_id = MovieTagJunction.movie_id
+JOIN MovieTags ON MovieTags.tag_id = MovieTagJunction.tag_id
+GROUP BY MovieTags.tag_id
+ORDER BY COUNT(MovieTags.tag_id) DESC
+LIMIT 10" ;
+
 $result_all_tags = mysqli_query($link, $sql_all_tags);
 
 ?>
@@ -66,7 +72,7 @@ $result_all_tags = mysqli_query($link, $sql_all_tags);
             <?php
                 if (mysqli_num_rows($result_all_tags) > 0) {
                     while($row_all_tags = mysqli_fetch_assoc($result_all_tags)){
-                        print '<li><a href="#">'.$row_all_tags[tag_name]."</a></li>";
+                        print '<li><a href="#">'.$row_all_tags[tag_name]."(".$row_all_tags[MOST_FREQUENT].")</a></li>";
                     }
                 }else{
                     print "<p>No Result</p>";
