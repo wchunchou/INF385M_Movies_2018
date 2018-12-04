@@ -1,9 +1,10 @@
 <?php
-    include_once("header.html");
-    include("db_connection.php");
+    include_once("header.php");
+    include_once("config.php");
+
+
     $sql="SELECT * FROM Movie JOIN Genre ON Movie.genre_id = Genre.genre_id ORDER BY Movie.year_released DESC LIMIT 10";
     $result = mysqli_query($link, $sql);
-    $img_path = "images/";
    
  ?>
 
@@ -16,6 +17,7 @@
     while($row = mysqli_fetch_assoc($result)) {
         $sql_tag = "SELECT MovieTags.tag_name, MovieTags.tag_id FROM MovieTagJunction JOIN Movie ON Movie.movie_id = MovieTagJunction.movie_id
         JOIN MovieTags ON MovieTags.tag_id = MovieTagJunction.tag_id WHERE Movie.movie_id='".$row["movie_id"]."'";
+        
 
         $result_tags = mysqli_query($link, $sql_tag);
         $posterimg = $img_path.$row["image"];
@@ -23,11 +25,11 @@
             <div class="card">
                 <div class="row no-gutters">
                     <div class="col-auto">
-                        <a href="#"><img src=" <?php print $img_path.$row["image"]; ?>" class="img-fluid" alt="" width="200px"></a>
+                        <a href="movie-detail.php?id=<?php print $row["movie_id"]?>"><img src=" <?php print $img_path.$row["image"]; ?>" class="img-fluid" alt="" width="200px"></a>
                     </div>
                     <div class="col">
                         <div class="card-block p-2">
-                            <h4 class="card-title"><a href="#"><?php print $row["movie_name"];?></a></h4>
+                            <h4 class="card-title"><a href="movie-detail.php?id=<?php print $row["movie_id"]?>"><?php print $row["movie_name"];?></a></h4>
                             <p class="card-text"><?php print $row["year_released"]." | ".$row["run_time"]." mins | ".$row["genre"];?></p>
                             <p class="card-text"><?php print $row["story_line"];?></p>
                             
@@ -40,11 +42,12 @@
                     // output data of each tags of this movie
                     if (mysqli_num_rows($result_tags) > 0) {
                         while($row_tags = mysqli_fetch_assoc($result_tags)){
-                            print '<li><a href="#">#'.$row_tags["tag_name"].'</a></li>';
+                            print '<li><a href="tag.php?id='.$row_tags["tag_id"].'">#'.$row_tags["tag_name"].'</a></li>';
                         }
                     }else{
                         print "No tags";
                     }
+                    mysqli_free_result($result_tags);
                 ?>
                     </ul>
                 </div>
@@ -54,15 +57,15 @@
 } else {
     print "0 results";
 }
-// pull all the tags from database
-$sql_all_tags = "SELECT MovieTags.tag_name, MovieTags.tag_id ,COUNT(MovieTags.tag_id) AS MOST_FREQUENT FROM MovieTagJunction 
-JOIN Movie ON Movie.movie_id = MovieTagJunction.movie_id
-JOIN MovieTags ON MovieTags.tag_id = MovieTagJunction.tag_id
-GROUP BY MovieTags.tag_id
-ORDER BY COUNT(MovieTags.tag_id) DESC
-LIMIT 10" ;
+    // pull all the tags from database
+    $sql_all_tags = "SELECT MovieTags.* ,COUNT(MovieTags.tag_id) AS MOST_FREQUENT FROM MovieTagJunction 
+    JOIN Movie ON Movie.movie_id = MovieTagJunction.movie_id
+    JOIN MovieTags ON MovieTags.tag_id = MovieTagJunction.tag_id
+    GROUP BY MovieTags.tag_id
+    ORDER BY COUNT(MovieTags.tag_id) DESC
+    LIMIT 10" ;
 
-$result_all_tags = mysqli_query($link, $sql_all_tags);
+    $result_all_tags = mysqli_query($link, $sql_all_tags);
 
 ?>
         </div>
@@ -72,7 +75,7 @@ $result_all_tags = mysqli_query($link, $sql_all_tags);
             <?php
                 if (mysqli_num_rows($result_all_tags) > 0) {
                     while($row_all_tags = mysqli_fetch_assoc($result_all_tags)){
-                        print '<li><a href="#">'.$row_all_tags[tag_name]."(".$row_all_tags[MOST_FREQUENT].")</a></li>";
+                        print '<li><a href="tag.php?id='.$row_all_tags["tag_id"].'">'.$row_all_tags["tag_name"]."(".$row_all_tags["MOST_FREQUENT"].")</a></li>";
                     }
                 }else{
                     print "<p>No Result</p>";
@@ -84,7 +87,8 @@ $result_all_tags = mysqli_query($link, $sql_all_tags);
 </div>
 <?php
     mysqli_free_result($result);
+    mysqli_free_result($result_all_tags);
 
     mysqli_close($link);
-    include_once("footer.html");
+    include_once("footer.php");
 ?>

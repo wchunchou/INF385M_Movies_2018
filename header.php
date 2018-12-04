@@ -1,3 +1,10 @@
+<?php 
+    // Initialize the session
+    if (session_status() !== PHP_SESSION_ACTIVE) {session_start();}
+    //chech if user already login , if not, hide Log out
+    
+?>
+
 <html>
 
 <head>
@@ -10,14 +17,15 @@
     <div class="container">
         <a class="navbar-brand" href="index.php">Movies</a>
         <ul class="nav justify-content-end ">
+            
+                <li class="nav-item">
+                <a class="nav-link text-light <?php if(!isset($_SESSION['user_name'])){ print "hidden";} ?>" href="logout.php">Log out</a>
+                </li>
             <li class="nav-item">
-                <a class="nav-link text-light" href="#">Log out</a>
+                <a class="nav-link text-light" href="login.php">Log in</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-light" href="#">Sign in</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-light" href="#">Sign up</a>
+                <a class="nav-link text-light" href="signup.php">Sign up</a>
             </li>
         </ul>
 
@@ -28,4 +36,4 @@
         </form> -->
 </nav>
 
-<body></body>
+<body>
