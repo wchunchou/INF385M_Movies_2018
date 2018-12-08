@@ -26,13 +26,13 @@
                  <h1>Hi, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Welcome to our site.</h1>
             </li>
             <li class="nav-item">
-            <a class="nav-link text-light <?php if(!isset($_SESSION['user_name'])){ print "hidden";} ?>" href="logout.php">Log out</a>
+            <a class="nav-link text-light" href="logout.php">Log out</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-light <?php if(isset($_SESSION['user_name'])){ print "hidden";?>" href="login.php">Log in</a>
+                <a class="nav-link text-light" href="login.php">Log in</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-light <?php if(isset($_SESSION['user_name'])){ print "hidden";?>" href="register.php">Sign up</a>
+                <a class="nav-link text-light" href="register.php">Sign up</a>
             </li>
 
         </ul>
