@@ -18,15 +18,15 @@
         <a class="navbar-brand" href="index.php">Movies</a>
         <ul class="nav justify-content-end ">
             
-                <li class="nav-item text-light <?php if(!isset($_SESSION['username'])){ print "hidden";?>"> Hi !</li>
+                <li class="nav-item text-light"> Hi !</li>
                 <li class="nav-item">
-                <a class="nav-link text-light <?php if(!isset($_SESSION['username'])){ print "hidden";} ?>" href="logout.php">Log out</a>
+                <a class="nav-link text-light" href="logout.php">Log out</a>
                 </li>
             <li class="nav-item">
-                <a class="nav-link text-light <?php if(isset($_SESSION['username'])){ print "hidden";?>" href="login.php">Log in</a>
+                <a class="nav-link text-light " href="login.php">Log in</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-light <?php if(isset($_SESSION['username'])){ print "hidden";?>" href="signup.php">Sign up</a>
+                <a class="nav-link text-light" href="signup.php">Sign up</a>
             </li>
         </ul>
 

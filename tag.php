@@ -1,14 +1,22 @@
 <?php
-    include_once("header.html");
+    include_once("header.php");
     include("db_connection.php");
-    $results = mysqli_query($link, "SQL SYNTAX HERE");
-    $rows = mysqli_fetch_array($results);
+$id= $_GET["id"];
+//print $id;
+$tags = "SELECT Movie.movie_name FROM MovieTagJunction JOIN MovieTags ON MovieTags.tag_id=MovieTagJunction.tag_id JOIN Movie ON MovieTagJunction.movie_id=Movie.movie_id WHERE MovieTags.tag_id=".$id; 
+
+
+    $results = mysqli_query($link, $tags);
+    
+
     while ($rows = mysqli_fetch_array($results)) {    
-        print "$rows[table_column here]"; 
+        print "$rows[movie_name] <br/>"; 
     };
 
 
 
+
+
     mysqli_close($link);
-    include_once("footer.html");
+    include_once("footer.php");
 ?>
