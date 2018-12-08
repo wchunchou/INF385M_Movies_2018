@@ -1,8 +1,13 @@
 <?php 
     // Initialize the session
-    if (session_status() !== PHP_SESSION_ACTIVE) {session_start();}
-    //chech if user already login , if not, hide Log out
-    
+    // Initialize the session
+    session_start();
+     
+    // Check if the user is logged in, if not then redirect him to login page
+    if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+        header("location: login.php");
+        exit;
+    }
 ?>
 
 <html>
@@ -17,18 +22,19 @@
     <div class="container">
         <a class="navbar-brand" href="index.php">Movies</a>
         <ul class="nav justify-content-end ">
-            
-                <li class="nav-item text-light <?php if(!isset($_SESSION['user_name'])){ print "hidden";?>" >Hi!<?php }else{ print $_SESSION['user_name'];} ?>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link text-light <?php if(!isset($_SESSION['user_name'])){ print "hidden";} ?>" href="logout.php">Log out</a>
-                </li>
+            <li class="nav-item">
+                 <h1>Hi, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Welcome to our site.</h1>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link text-light <?php if(!isset($_SESSION['user_name'])){ print "hidden";} ?>" href="logout.php">Log out</a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link text-light <?php if(isset($_SESSION['user_name'])){ print "hidden";?>" href="login.php">Log in</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-light <?php if(isset($_SESSION['user_name'])){ print "hidden";?>" href="signup.php">Sign up</a>
+                <a class="nav-link text-light <?php if(isset($_SESSION['user_name'])){ print "hidden";?>" href="register.php">Sign up</a>
             </li>
+
         </ul>
 
     </div>
