@@ -3,7 +3,7 @@
     include_once("db_connection.php");
 
 
-    $sql="SELECT * FROM Movie JOIN Genre ON Movie.genre_id = Genre.genre_id ORDER BY Movie.year_released DESC LIMIT 20";
+    $sql="SELECT * FROM Movie JOIN Genre ON Movie.genre_id = Genre.genre_id ORDER BY Movie.year_released DESC";
     $result = mysqli_query($link, $sql);
    
  ?>
@@ -62,8 +62,7 @@
     JOIN Movie ON Movie.movie_id = MovieTagJunction.movie_id
     JOIN MovieTags ON MovieTags.tag_id = MovieTagJunction.tag_id
     GROUP BY MovieTags.tag_id
-    ORDER BY COUNT(MovieTags.tag_id) DESC
-    LIMIT 10" ;
+    ORDER BY COUNT(MovieTags.tag_id) DESC" ;
 
     $result_all_tags = mysqli_query($link, $sql_all_tags);
 
