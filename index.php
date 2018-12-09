@@ -3,7 +3,7 @@
     include_once("db_connection.php");
 
 
-    $sql="SELECT * FROM Movie JOIN Genre ON Movie.genre_id = Genre.genre_id ORDER BY Movie.year_released DESC LIMIT 10";
+    $sql="SELECT * FROM Movie JOIN Genre ON Movie.genre_id = Genre.genre_id ORDER BY Movie.year_released DESC LIMIT 20";
     $result = mysqli_query($link, $sql);
    
  ?>

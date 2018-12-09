@@ -7,11 +7,12 @@
 }
 
 .home-tag {
-    display: flex;
+    display: inline-block;
     list-style: none;
 }
 
 .home-tag li {
+    float: left;
     padding-right: 5px;
 }
 

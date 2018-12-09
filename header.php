@@ -22,18 +22,11 @@
     <div class="container">
         <a class="navbar-brand" href="index.php">Movies</a>
         <ul class="nav justify-content-end ">
-
             <li class="nav-item">
-                 <p class="nav-link text-light" >Hi, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Welcome to our site.</p>
+                 <span class="nav-link text-light" >Hi, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Welcome to our site.</span>
             </li>
             <li class="nav-item">
-            <a class="nav-link text-light" href="logout.php">Log out</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-light" href="login.php">Log in</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-light" href="register.php">Sign up</a>
+            <a class="nav-link text-light " href="logout.php">Log out</a>
             </li>
 
         </ul>
